@@ -1,0 +1,43 @@
+{% extends 'base.html' %} {% block content %}
+<form action="{% url 'doctores_crear' %}" method="POST">
+  {% csrf_token %}
+  <input
+    type="text"
+    name="doctor_id"
+    placeholder="Ingrese su numero de doctor"
+  />
+  <input
+    type="text"
+    name="doctor_nombre"
+    placeholder="Ingrese su nombre de doctor"
+  />
+  <input
+    type="text"
+    name="doctor_direccion"
+    placeholder="Ingrese su direccion de doctor"
+  />
+  <input
+    type="text"
+    name="doctor_telefono"
+    placeholder="Ingrese su telefono de doctor"
+  />
+
+  <button>Guardar</button>
+</form>
+
+{% for doctor in doctores %}
+<div>
+  <p>{{doctor.doctor_id}}</p>
+  <h3>{{doctor.doctor_nombre}}</h3>
+  <p>{{doctor.doctor_direccion}}</p>
+  <p>{{doctor.doctor_telefono}}</p>
+  <form action="{% url 'delete_doctores' doctor.doctor_id %}" method="POST">
+    {% csrf_token %}
+    <button>Eliminar</button>
+  </form>
+</div>
+{% empty %}
+<h2>No hay seguros</h2>
+{% endfor %}
+<!--  -->
+{% endblock%}

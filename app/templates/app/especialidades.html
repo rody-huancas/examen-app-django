@@ -1,15 +1,15 @@
 {% extends 'base.html' %} {% block content %}
-<form action="{% url 'seguros_crear' %}" method="POST">
+<form action="{% url 'especialidades_crear' %}" method="POST">
   {% csrf_token %}
   <input
     type="text"
-    name="tipo_seguro_id"
-    placeholder="Ingrese su numero de seguro"
+    name="especialidad_id"
+    placeholder="Ingrese su numero de especialidad"
   />
   <input
     type="text"
-    name="tipo_seguro_nombre"
-    placeholder="Ingrese su nombre de seguro"
+    name="especialidad_nombre"
+    placeholder="Ingrese su nombre de especialidad"
   />
 
   <button>Guardar</button>
@@ -17,8 +17,15 @@
 
 {% for especialidad in especialidades %}
 <div>
-  <h3>{{especialidad.tipo_especialidad_id}}</h3>
-  <p>{{especialidad.tipo_especialidad_nombre}}</p>
+  <h3>{{especialidad.especialidad_id}}</h3>
+  <p>{{especialidad.especialidad_nombre}}</p>
+  <form
+    action="{% url 'delete_especialidad' especialidad.especialidad_id %}"
+    method="POST"
+  >
+    {% csrf_token %}
+    <button>Eliminar</button>
+  </form>
 </div>
 {% empty %}
 <h2>No hay seguros</h2>

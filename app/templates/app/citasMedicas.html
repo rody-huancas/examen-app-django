@@ -1,0 +1,63 @@
+{% extends 'base.html' %} {% block content %}
+<form action="{% url 'citas_crear' %}" method="POST">
+  {% csrf_token %}
+  <input type="text" name="cita_id" placeholder="Ingrese su nro de cita" />
+  <!-- pacientes -->
+  <select name="paciente_id">
+    {% for paciente in pacientes %}
+    <option value="{{ paciente.id }}">{{ paciente.nombre }}</option>
+    {% endfor %}
+  </select>
+  <input type="date" name="fecha_cita" />
+  <!-- Especialidad -->
+  <select name="especialidad_id">
+    {% for especialidades in especialidad %}
+    <option value="{{ especialidades.especialidad_id }}">
+      {{ especialidades.especialidad_nombre }}
+    </option>
+    {% endfor %}
+  </select>
+  <!-- doctor -->
+  <select name="doctor_id">
+    {% for doctores in doctor %}
+    <option value="{{ doctores.doctor_id }}">
+      {{ doctores.doctor_nombre }}
+    </option>
+    {% endfor %}
+  </select>
+  <input
+    type="text"
+    name="observaciones"
+    placeholder="Ingrese su observaciones"
+  />
+  <!-- usuarios -->
+  <select name="username">
+    {% for users in user %}
+    <option value="{{ users.username }}">{{ users.full_name }}</option>
+    {% endfor %}
+  </select>
+
+  <button>Guardar</button>
+</form>
+
+{% for cita in citas %}
+<div style="border-top: 2px solid #000">
+  <p>{{ cita.cita_id }}</p>
+  <p>{{ cita.fecha_cita }}</p>
+  <p>{{ cita.observaciones }}</p>
+  <p>{{ cita.doctor_id.doctor_nombre }}</p>
+  <p>{{ cita.especialidad_id.especialidad_nombre }}</p>
+  <p>{{ cita.paciente_id.nombre }}</p>
+  <p>{{ cita.username.full_name }}</p>
+
+  <form action="{% url 'delete_citas' cita.cita_id %}" method="POST">
+    {% csrf_token %}
+    <button>Eliminar</button>
+  </form>
+</div>
+{% empty %}
+<h2>No hay pacientes</h2>
+{% endfor %}
+
+<!--  -->
+{% endblock%}

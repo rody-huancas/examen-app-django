@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .models import Tipo_Documento_Identidad, tipos_seguro, paciente, especialidades
+from .models import Tipo_Documento_Identidad, tipos_seguro, paciente, especialidades, doctores, citas_medicas, usuario
 
 # Create your views here.
 def home(request):
@@ -56,6 +56,7 @@ def create_paciente(request):
     
     pacientes = paciente(
         tipo_documento_id=tipo_documento,
+        nro_documento=request.POST['nro_documento'],
         nombre=request.POST['nombre'],
         apellidos=request.POST['apellidos'],
         direccion=request.POST['direccion'],
@@ -65,7 +66,6 @@ def create_paciente(request):
     
     pacientes.save()
     return redirect('/pacientes/')
-
 
 
 def delete_paciente(request, paciente_id):
@@ -79,4 +79,80 @@ def list_especialidades(request):
     especialidad = especialidades.objects.all()
     return render(request, 'app/especialidades.html', {'especialidades':especialidad})
 
+
+def create_especialidad(request):
+    especialidad = especialidades( especialidad_id=request.POST['especialidad_id'], especialidad_nombre=request.POST['especialidad_nombre'])
+    especialidad.save()
+    return redirect('/especialidades/')
+
+
+def delete_especialidad(request, especialidad_id):
+    especialidad = especialidades.objects.get(especialidad_id=especialidad_id)
+    especialidad.delete()
+    return redirect('/especialidades/')
 # FIN ESPECIALIDADES
+
+# DOCTORES
+def list_doctores(request):
+    doctor = doctores.objects.all()
+    return render(request, 'app/doctores.html', {'doctores':doctor})
+
+
+def create_doctor(request):
+    doctor = doctores( doctor_id=request.POST['doctor_id'], 
+                      doctor_nombre=request.POST['doctor_nombre'],
+                      doctor_direccion=request.POST['doctor_direccion'],
+                      doctor_telefono=request.POST['doctor_telefono'])
+    doctor.save()
+    return redirect('/doctores/')
+
+
+def delete_doctores(request, doctor_id):
+    doctor = doctores.objects.get(doctor_id=doctor_id)
+    doctor.delete()
+    return redirect('/doctores/')
+# FIN DOCTORES
+
+# CITAS MEDICAS
+def list_citas(request):
+    citas = citas_medicas.objects.all()
+    pacientes = paciente.objects.all()
+    especialidad = especialidades.objects.all()
+    doctor = doctores.objects.all()
+    user = usuario.objects.all()
+    
+    return render(request, 'app/citasMedicas.html', {'citas': citas ,'pacientes': pacientes, 'especialidad': especialidad, 'doctor': doctor, 'user': user})
+
+
+def create_citas(request):
+    paciente_id = request.POST['paciente_id']
+    paciente_obj = paciente.objects.get(id=paciente_id)
+    
+    especialidad_id = request.POST['especialidad_id']
+    especialidad_obj = especialidades.objects.get(especialidad_id=especialidad_id)
+    
+    doctor_id = request.POST['doctor_id']
+    doctor_obj = doctores.objects.get(doctor_id=doctor_id)
+    
+    username = request.POST['username']
+    user_obj = usuario.objects.get(username=username)
+    
+    cita = citas_medicas(
+        cita_id=request.POST['cita_id'],
+        observaciones=request.POST['observaciones'],
+        fecha_cita=request.POST['fecha_cita'],
+        doctor_id=doctor_obj,
+        especialidad_id=especialidad_obj,
+        paciente_id=paciente_obj,
+        username_id=user_obj
+    )
+    
+    cita.save()
+    return redirect('/citas/')
+
+
+def delete_citas(request, cita_id):
+    citas = citas_medicas.objects.get(cita_id=cita_id)
+    citas.delete()
+    return redirect('/citas/')
+# FIN CITAS MEDICAS

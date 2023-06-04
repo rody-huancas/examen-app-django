@@ -29,12 +29,13 @@
 {% for paciente in pacientes %}
 <div style="border-top: 2px solid #000">
   <p>{{ paciente.tipo_documento_id.tipo_documento_nombre }}</p>
-  <p>{{ paciente.nro_documento }}</p>
+  <p>{{ paciente.id }}</p>
   <h3>{{ paciente.nombre }}</h3>
   <p>{{ paciente.apellidos }}</p>
   <p>{{ paciente.direccion }}</p>
   <p>{{ paciente.fecha_nacimiento }}</p>
   <p>{{ paciente.tipo_seguro_id.tipo_seguro_nombre }}</p>
+  <p>{{ paciente.paciente_id.paciente_nombre }}</p>
 
   <form action="{% url 'delete_paciente' paciente.id %}" method="POST">
     {% csrf_token %}
