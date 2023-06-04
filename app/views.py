@@ -189,7 +189,6 @@ def update_doctor(request, doctor_id):
     return render(request, 'app/update_doctores.html', {'doctor': doctor})
 
 
-
 def delete_doctores(request, doctor_id):
     doctor = doctores.objects.get(doctor_id=doctor_id)
     doctor.delete()
@@ -266,8 +265,6 @@ def update_citas(request, cita_id):
     doctor = doctores.objects.all()
     usuarios = usuario.objects.all()
     return render(request, 'app/update_citas.html', {'cita': cita, 'pacientes': pacientes, 'especialidades': especialidad, 'doctores': doctor, 'usuarios': usuarios})
-
-
 
 
 def delete_citas(request, cita_id):

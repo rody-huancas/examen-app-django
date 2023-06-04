@@ -5,13 +5,10 @@
 {%block content%}
 <section class="feature">
   <div class="feature-content">
-    <h1>Todo</h1>
-    <p>
-      Esta app te ayuda a mantenerte enfocado, no importa si es para trabajo o
-      juego
-    </p>
-    <a class="btn btn-primary cta" href="#">Comencemos</a>
+    <h1>Examen Parcial</h1>
+    <p>Del curso de Taller de Lenguajes de Programación</p>
+    <a class="btn btn-primary cta" href="{% url 'citas' %}">Comencemos</a>
   </div>
-  <img src="{%static 'images/feature.jpg'%}" alt="" class="feature-image" />
+  <img src="{%static 'images/examen.png'%}" alt="" class="feature-image" />
 </section>
 {%endblock%}

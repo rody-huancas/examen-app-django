@@ -83,13 +83,6 @@ a:hover {
   border-bottom: solid 1px var(--color-light);
 }
 
-.header .container {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-}
-
 .header .container .menu {
   display: flex;
   align-items: center;

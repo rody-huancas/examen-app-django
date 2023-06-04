@@ -1,33 +1,45 @@
 {% extends 'base.html' %} {% block content %}
-<form action="{% url 'seguros_crear' %}" method="POST">
+<form action="{% url 'seguros_crear' %}" method="POST" class="form">
   {% csrf_token %}
   <input
     type="number"
     name="tipo_seguro_id"
     placeholder="Ingrese su numero de seguro"
+    class="form_input"
   />
   <input
     type="text"
     name="tipo_seguro_nombre"
     placeholder="Ingrese su nombre de seguro"
+    class="form_input"
   />
 
-  <button>Guardar</button>
+  <button><i class="bi bi-save"></i> Guardar</button>
 </form>
 
-{% for seguro in seguros %}
-<div>
-  <h3>{{ seguro.tipo_seguro_id }}</h3>
-  <p>{{ seguro.tipo_seguro_nombre }}</p>
-  <form action="{% url 'delete_seguro' seguro.tipo_seguro_id %}" method="POST">
-    {% csrf_token %}
-    <button>Eliminar</button>
-  </form>
-  <a href="{% url 'update_seguro' seguro.tipo_seguro_id %}">Actualizar</a>
-</div>
+<h3 class="main_subtitle">Tipos de Seguro Registrados</h3>
+<div class="main_grid">
+  {% for seguro in seguros %}
+  <div class="main_card">
+    <h3>{{ seguro.tipo_seguro_id }}</h3>
+    <p>{{ seguro.tipo_seguro_nombre }}</p>
+    <div class="main_card-group">
+      <form
+        action="{% url 'delete_seguro' seguro.tipo_seguro_id %}"
+        method="POST"
+      >
+        {% csrf_token %}
+        <button class="main_btn">Eliminar</button>
+      </form>
+      <a class="main_btn" href="{% url 'update_seguro' seguro.tipo_seguro_id %}"
+        >Actualizar</a
+      >
+    </div>
+  </div>
 
-{% empty %}
-<h2>No hay seguros</h2>
-{% endfor %}
+  {% empty %}
+  <h2>No hay seguros</h2>
+  {% endfor %}
+</div>
 <!--  -->
 {% endblock%}

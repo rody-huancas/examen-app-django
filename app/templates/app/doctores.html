@@ -1,44 +1,55 @@
 {% extends 'base.html' %} {% block content %}
-<form action="{% url 'doctores_crear' %}" method="POST">
+<form action="{% url 'doctores_crear' %}" method="POST" class="form">
   {% csrf_token %}
   <input
     type="number"
     name="doctor_id"
     placeholder="Ingrese su numero de doctor"
+    class="form_input"
   />
   <input
     type="text"
     name="doctor_nombre"
     placeholder="Ingrese su nombre de doctor"
+    class="form_input"
   />
   <input
     type="text"
     name="doctor_direccion"
     placeholder="Ingrese su direccion de doctor"
+    class="form_input"
   />
   <input
     type="number"
     name="doctor_telefono"
     placeholder="Ingrese su telefono de doctor"
+    class="form_input"
   />
 
-  <button>Guardar</button>
+  <button><i class="bi bi-save"></i> Guardar</button>
 </form>
 
-{% for doctor in doctores %}
-<div>
-  <p>{{ doctor.doctor_id }}</p>
-  <h3>{{ doctor.doctor_nombre }}</h3>
-  <p>{{ doctor.doctor_direccion }}</p>
-  <p>{{ doctor.doctor_telefono }}</p>
-  <a href="{% url 'update_doctor' doctor.doctor_id %}">Actualizar</a>
-  <form action="{% url 'delete_doctores' doctor.doctor_id %}" method="POST">
-    {% csrf_token %}
-    <button>Eliminar</button>
-  </form>
+<h3 class="main_subtitle">Documentos Registrados</h3>
+<div class="main_grid">
+  {% for doctor in doctores %}
+  <div class="main_card">
+    <p>{{ doctor.doctor_id }}</p>
+    <h3>{{ doctor.doctor_nombre }}</h3>
+    <p>{{ doctor.doctor_direccion }}</p>
+    <p>{{ doctor.doctor_telefono }}</p>
+    <div class="main_card-group">
+      <a class="main_btn" href="{% url 'update_doctor' doctor.doctor_id %}"
+        >Actualizar</a
+      >
+      <form action="{% url 'delete_doctores' doctor.doctor_id %}" method="POST">
+        {% csrf_token %}
+        <button class="main_btn">Eliminar</button>
+      </form>
+    </div>
+  </div>
+  {% empty %}
+  <h2>No hay seguros</h2>
+  {% endfor %}
 </div>
-{% empty %}
-<h2>No hay seguros</h2>
-{% endfor %}
 <!--  -->
 {% endblock%}

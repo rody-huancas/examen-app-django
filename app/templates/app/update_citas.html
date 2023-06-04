@@ -1,17 +1,17 @@
 {% extends 'base.html' %}
 {% block content %}
-<form action="{% url 'citas_actualizar' cita.cita_id %}" method="POST">
+<form action="{% url 'citas_actualizar' cita.cita_id %}" method="POST" class="form">
   {% csrf_token %}
-  <input type="number" name="cita_id" value="{{ cita.cita_id }}" placeholder="Ingrese su nro de cita" />
+  <input type="number" name="cita_id" value="{{ cita.cita_id }}" placeholder="Ingrese su nro de cita" class="form_input"/>
   <!-- pacientes -->
-  <select name="paciente_id">
+  <select name="paciente_id" class="form_input">
     {% for paciente in pacientes %}
     <option value="{{ paciente.id }}" {% if paciente.id == cita.paciente_id.id %} selected {% endif %}>{{ paciente.nombre }}</option>
     {% endfor %}
   </select>
-  <input type="date" name="fecha_cita" value="{{ cita.fecha_cita|date:'Y-m-d' }}" />
+  <input type="date" name="fecha_cita" value="{{ cita.fecha_cita|date:'Y-m-d' }}" class="form_input"/>
   <!-- Especialidad -->
-  <select name="especialidad_id">
+  <select name="especialidad_id" class="form_input">
     {% for especialidad in especialidades %}
     <option value="{{ especialidad.especialidad_id }}" {% if especialidad.especialidad_id == cita.especialidad_id.especialidad_id %} selected {% endif %}>
       {{ especialidad.especialidad_nombre }}
@@ -19,16 +19,16 @@
     {% endfor %}
   </select>
   <!-- doctor -->
-  <select name="doctor_id">
+  <select name="doctor_id" class="form_input">
     {% for doctor in doctores %}
     <option value="{{ doctor.doctor_id }}" {% if doctor.doctor_id == cita.doctor_id.doctor_id %} selected {% endif %}>
       {{ doctor.doctor_nombre }}
     </option>
     {% endfor %}
   </select>
-  <input type="text" name="observaciones" value="{{ cita.observaciones }}" placeholder="Ingrese su observaciones" />
+  <input type="text" name="observaciones" value="{{ cita.observaciones }}" placeholder="Ingrese su observaciones" class="form_input"/>
   <!-- usuarios -->
-  <select name="username">
+  <select name="username" class="form_input">
     {% for user in usuarios %}
     <option value="{{ user.username }}" {% if user.username == cita.username.username %} selected {% endif %}>
       {{ user.full_name }}
@@ -36,6 +36,6 @@
     {% endfor %}
   </select>
 
-  <button>Guardar</button>
+  <button>Actualizar</button>
 </form>
 {% endblock %}

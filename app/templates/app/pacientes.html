@@ -1,8 +1,9 @@
 {% extends 'base.html' %} {% block content %}
-<form action="{% url 'pacientes_crear' %}" method="POST">
+<h3>REGISTRAR PACIENTES</h3>
+<form action="{% url 'pacientes_crear' %}" method="POST" class="form">
   {% csrf_token %}
   <!-- tipos de documento -->
-  <select name="tipo_documento_id">
+  <select name="tipo_documento_id" class="form_input">
     {% for tipo_documento in tipos_documento %}
     <option value="{{ tipo_documento.tipo_documento_id }}">
       {{ tipo_documento.tipo_documento_nombre }}
@@ -13,13 +14,29 @@
     type="number"
     name="nro_documento"
     placeholder="Ingrese su documento"
+    class="form_input"
   />
-  <input type="text" name="nombre" placeholder="Ingrese su nombre" />
-  <input type="text" name="apellidos" placeholder="Ingrese su apellidos" />
-  <input type="text" name="direccion" placeholder="Ingrese su direccion" />
-  <input type="date" name="fecha_nacimiento" />
+  <input
+    class="form_input"
+    type="text"
+    name="nombre"
+    placeholder="Ingrese su nombre"
+  />
+  <input
+    class="form_input"
+    type="text"
+    name="apellidos"
+    placeholder="Ingrese su apellidos"
+  />
+  <input
+    class="form_input"
+    type="text"
+    name="direccion"
+    placeholder="Ingrese su direccion"
+  />
+  <input class="form_input" type="date" name="fecha_nacimiento" />
   <!-- tipos de seguro -->
-  <select name="tipo_seguro_id">
+  <select name="tipo_seguro_id" class="form_input">
     {% for tipo_seguro in tipos_seguros %}
     <option value="{{ tipo_seguro.tipo_seguro_id }}">
       {{ tipo_seguro.tipo_seguro_nombre }}
@@ -27,30 +44,36 @@
     {% endfor %}
   </select>
 
-  <button>Guardar</button>
+  <button><i class="bi bi-save"></i> Guardar</button>
 </form>
 
-{% for paciente in pacientes %}
-<div style="border-top: 2px solid #000">
-  <p>{{ paciente.tipo_documento_id.tipo_documento_nombre }}</p>
-  <p>{{ paciente.id }}</p>
-  <h3>{{ paciente.nombre }}</h3>
-  <p>{{ paciente.apellidos }}</p>
-  <p>{{ paciente.direccion }}</p>
-  <p>{{ paciente.fecha_nacimiento }}</p>
-  <p>{{ paciente.tipo_seguro_id.tipo_seguro_nombre }}</p>
-  <p>{{ paciente.paciente_id.paciente_nombre }}</p>
+<h3 class="main_subtitle">Pacientes Registrados</h3>
+<div class="main_grid">
+  {% for paciente in pacientes %}
+  <div class="main_card">
+    <p>{{ paciente.tipo_documento_id.tipo_documento_nombre }}</p>
+    <p>{{ paciente.id }}</p>
+    <h3>{{ paciente.nombre }}</h3>
+    <p>{{ paciente.apellidos }}</p>
+    <p>{{ paciente.direccion }}</p>
+    <p>{{ paciente.fecha_nacimiento }}</p>
+    <p>{{ paciente.tipo_seguro_id.tipo_seguro_nombre }}</p>
+    <p>{{ paciente.paciente_id.paciente_nombre }}</p>
 
-  <form action="{% url 'delete_paciente' paciente.id %}" method="POST">
-    {% csrf_token %}
-    <button>Eliminar</button>
-  </form>
+    <div class="main_card-group">
+      <form action="{% url 'delete_paciente' paciente.id %}" method="POST">
+        {% csrf_token %}
+        <button class="main_btn">Eliminar</button>
+      </form>
 
-  <a href="{% url 'update_paciente' paciente.id %}">Actualizar</a>
+      <a class="main_btn" href="{% url 'update_paciente' paciente.id %}"
+        >Actualizar</a
+      >
+    </div>
+  </div>
+  {% empty %}
+  <h2>No hay pacientes</h2>
+  {% endfor %}
 </div>
-{% empty %}
-<h2>No hay pacientes</h2>
-{% endfor %}
-
 <!--  -->
 {% endblock%}

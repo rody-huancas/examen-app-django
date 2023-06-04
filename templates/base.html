@@ -5,6 +5,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="{% static 'css/styles.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/app.css' %}" />
     <title>Examen</title>
   </head>
 
@@ -14,28 +15,28 @@
         {%if request.user.is_authenticated %}
         <span>Hola {{ request.user.username | title }}</span>
 
-        <div class="menu">
-          <a href="{% url 'home' %}"><i class="bi bi-house-fill"></i> Inicio</a>
-          <a href="{% url 'documentos' %}">Tipo documento</a>
-          <a href="{% url 'seguros' %}">Tipos Seguro</a>
-          <a href="{% url 'pacientes' %}">Pacientes</a>
-          <a href="{% url 'especialidades' %}">Especialidades</a>
-          <a href="{% url 'doctores' %}">Doctores</a>
-          <a href="{% url 'citas' %}">Citas médicas</a>
+        <div class="menu_container">
+          <a class="item_menu" href="{% url 'home' %}"><i class="bi bi-house-fill"></i> Inicio</a>
+          <a class="item_menu" href="{% url 'documentos' %}"><i class="bi bi-file-earmark-ruled-fill"></i> Tipo documento</a>
+          <a class="item_menu" href="{% url 'seguros' %}"><i class="bi bi-file-earmark-minus-fill"></i> Tipos Seguro</a>
+          <a class="item_menu" href="{% url 'pacientes' %}"><i class="bi bi-people-fill"></i> Pacientes</a>
+          <a class="item_menu" href="{% url 'especialidades' %}"><i class="bi bi-file-medical-fill"></i> Especialidades</a>
+          <a class="item_menu" href="{% url 'doctores' %}"><i class="bi bi-hospital-fill"></i> Doctores</a>
+          <a class="item_menu" href="{% url 'citas' %}"><i class="bi bi-heart-pulse-fill"></i> Citas médicas</a>
         </div>
         <div>
-          <a href="{% url 'logout' %}">Salir</a>
+          <a class="item_menu-logout" href="{% url 'logout' %}"><i class="bi bi-box-arrow-right"></i>Salir</a>
           {%else%}
           <span class="logo">RODY</span>
           <div class="auth">
-            <a href="{% url 'login' %}">Iniciar Sesión</a>
-            <a href="{% url 'registro' %}">Registrarse</a>
+            <a class="item_menu" href="{% url 'login' %}">Iniciar Sesión</a>
+            <a class="item_menu" href="{% url 'registro' %}">Registrarse</a>
           </div>
           {%endif%}
         </div>
       </div>
     </header>
-    <main>
+    <main class="main">
        {% comment %} ALERTA {% endcomment %}
       {% comment %} <div id="message-container">
         {% if messages %}
@@ -53,7 +54,7 @@
       <div class="container">
         <p>
           &copy; Copyright {% now "Y" %} by
-          <a href="#">rody</a>
+          <a href="https://rodyhuancas.netlify.app/">Rody Huancas</a>
         </p>
       </div>
     </footer>

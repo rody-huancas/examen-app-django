@@ -2,6 +2,7 @@
 <form
   action="{% url 'update_document' documento.tipo_documento_id %}"
   method="POST"
+  class="form"
 >
   {% csrf_token %}
   <input
@@ -9,12 +10,14 @@
     name="tipo_documento_id"
     placeholder="Ingrese su numero de seguro"
     value="{{ documento.tipo_documento_id }}"
+    class="form_input"
   />
   <input
     type="text"
     name="tipo_documento_nombre"
     placeholder="Ingrese su nombre de seguro"
     value="{{ documento.tipo_documento_nombre }}"
+    class="form_input"
   />
 
   <button>Actualizar</button>

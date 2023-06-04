@@ -1,37 +1,46 @@
 {% extends 'base.html' %} {% block content %}
-<form action="{% url 'especialidades_crear' %}" method="POST">
+<form action="{% url 'especialidades_crear' %}" method="POST" class="form">
   {% csrf_token %}
   <input
     type="number"
     name="especialidad_id"
     placeholder="Ingrese su numero de especialidad"
+    class="form_input"
   />
   <input
     type="text"
     name="especialidad_nombre"
     placeholder="Ingrese su nombre de especialidad"
+    class="form_input"
   />
 
-  <button>Guardar</button>
+  <button><i class="bi bi-save"></i> Guardar</button>
 </form>
 
-{% for especialidad in especialidades %}
-<div>
-  <h3>{{ especialidad.especialidad_id }}</h3>
-  <p>{{ especialidad.especialidad_nombre }}</p>
-  <a href="{% url 'update_especialidad' especialidad.especialidad_id %}"
-    >Actualizar</a
-  >
-  <form
-    action="{% url 'delete_especialidad' especialidad.especialidad_id %}"
-    method="POST"
-  >
-    {% csrf_token %}
-    <button>Eliminar</button>
-  </form>
+<h3 class="main_subtitle">Documentos Registrados</h3>
+<div class="main_grid">
+  {% for especialidad in especialidades %}
+  <div class="main_card">
+    <h3>{{ especialidad.especialidad_id }}</h3>
+    <p>{{ especialidad.especialidad_nombre }}</p>
+    <div class="main_card-group">
+      <a
+        class="main_btn"
+        href="{% url 'update_especialidad' especialidad.especialidad_id %}"
+        >Actualizar</a
+      >
+      <form
+        action="{% url 'delete_especialidad' especialidad.especialidad_id %}"
+        method="POST"
+      >
+        {% csrf_token %}
+        <button class="main_btn">Eliminar</button>
+      </form>
+    </div>
+  </div>
+  {% empty %}
+  <h2>No hay seguros</h2>
+  {% endfor %}
 </div>
-{% empty %}
-<h2>No hay seguros</h2>
-{% endfor %}
 <!--  -->
 {% endblock%}

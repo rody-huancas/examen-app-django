@@ -1,37 +1,47 @@
 {% extends 'base.html' %} {% block content %}
-<form action="{% url 'documentos_crear' %}" method="POST">
+<h3>Tipo de documento</h3>
+<form action="{% url 'documentos_crear' %}" method="POST" class="form">
   {% csrf_token %}
   <input
     type="number"
     name="tipo_documento_id"
     placeholder="Ingrese su numero de seguro"
+    class="form_input"
   />
   <input
     type="text"
     name="tipo_documento_nombre"
     placeholder="Ingrese su nombre de seguro"
+    class="form_input"
   />
 
-  <button>Guardar</button>
+  <button><i class="bi bi-save"></i> Guardar</button>
 </form>
 
-{% for documento in documentos %}
-<div>
-  <h3>{{ documento.tipo_documento_id }}</h3>
-  <p>{{ documento.tipo_documento_nombre }}</p>
-  <form
-    action="{% url 'delete_document' documento.tipo_documento_id %}"
-    method="POST"
-  >
-    {% csrf_token %}
-    <button>Eliminar</button>
-  </form>
-  <a href="{% url 'update_document' documento.tipo_documento_id %}"
-    >Actualizar</a
-  >
+<h3 class="main_subtitle">Documentos Registrados</h3>
+<div class="main_grid">
+  {% for documento in documentos %}
+  <div class="main_card">
+    <h3>{{ documento.tipo_documento_id }}</h3>
+    <p>{{ documento.tipo_documento_nombre }}</p>
+    <div class="main_card-group">
+      <form
+        action="{% url 'delete_document' documento.tipo_documento_id %}"
+        method="POST"
+      >
+        {% csrf_token %}
+        <button class="main_btn">Eliminar</button>
+      </form>
+      <a
+        class="main_btn"
+        href="{% url 'update_document' documento.tipo_documento_id %}"
+        >Actualizar</a
+      >
+    </div>
+  </div>
+  {% empty %}
+  <h2>No hay seguros</h2>
+  {% endfor %}
 </div>
-{% empty %}
-<h2>No hay seguros</h2>
-{% endfor %}
 <!--  -->
 {% endblock%}

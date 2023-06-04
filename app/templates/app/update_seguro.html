@@ -1,19 +1,25 @@
 {% extends 'base.html' %} {% block content %}
-<form action="{% url 'update_seguro' seguro.tipo_seguro_id %}" method="POST">
+<form
+  action="{% url 'update_seguro' seguro.tipo_seguro_id %}"
+  method="POST"
+  class="form"
+>
   {% csrf_token %}
   <input
     type="number"
     name="tipo_seguro_id"
     value="{{ seguro.tipo_seguro_id }}"
     placeholder="Ingrese su numero de seguro"
+    class="form_input"
   />
   <input
     type="text"
     name="tipo_seguro_nombre"
     value="{{ seguro.tipo_seguro_nombre }}"
     placeholder="Ingrese su nombre de seguro"
+    class="form_input"
   />
 
-  <button>Guardar</button>
+  <button>Actualizar</button>
 </form>
 {% endblock %}

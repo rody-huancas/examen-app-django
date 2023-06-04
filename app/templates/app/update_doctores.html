@@ -1,31 +1,39 @@
 {% extends 'base.html' %} {% block content %}
-<form action="{% url 'update_doctor' doctor.doctor_id %}" method="POST">
+<form
+  action="{% url 'update_doctor' doctor.doctor_id %}"
+  method="POST"
+  class="form"
+>
   {% csrf_token %}
   <input
     type="number"
     name="doctor_id"
     value="{{ doctor.doctor_id }}"
     placeholder="Ingrese su número de doctor"
+    class="form_input"
   />
   <input
     type="text"
     name="doctor_nombre"
     value="{{ doctor.doctor_nombre }}"
     placeholder="Ingrese su nombre de doctor"
+    class="form_input"
   />
   <input
     type="text"
     name="doctor_direccion"
     value="{{ doctor.doctor_direccion }}"
     placeholder="Ingrese su dirección de doctor"
+    class="form_input"
   />
   <input
     type="number"
     name="doctor_telefono"
     value="{{ doctor.doctor_telefono }}"
     placeholder="Ingrese su teléfono de doctor"
+    class="form_input"
   />
 
-  <button>Guardar</button>
+  <button>Actualizar</button>
 </form>
 {% endblock %}
