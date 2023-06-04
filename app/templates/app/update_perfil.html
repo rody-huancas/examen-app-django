@@ -1,0 +1,41 @@
+{% extends 'base.html' %} {% block content %}
+<h3>ACTUALIZAR PERFIL DE USUARIO</h3>
+<form action="{% url 'update_user' user.username %}" method="POST" class="form">
+  {% csrf_token %}
+  <input
+    type="text"
+    name="username"
+    placeholder="Ingrese su nombre de usuario"
+    value="{{ user.username }}"
+    class="form_input"
+  />
+  <input
+    type="text"
+    name="full_name"
+    placeholder="Ingrese su nombre completo"
+    value="{{ user.full_name }}"
+    class="form_input"
+  />
+  <input
+    type="email"
+    name="email"
+    placeholder="Ingrese su dirección de correo electrónico"
+    value="{{ user.email }}"
+    class="form_input"
+  />
+  <div class="form_group">
+    <label class="form_label-alert"
+      >*Si dejas vacio este campo, tomará tu contraseña actual, si quieres
+      cambiar la contraseña, llena el campo*</label
+    >
+    <input
+      type="password"
+      name="password"
+      placeholder="Ingrese su nueva contraseña"
+      class="form_input"
+    />
+  </div>
+
+  <button type="submit">Actualizar</button>
+</form>
+{% endblock %}

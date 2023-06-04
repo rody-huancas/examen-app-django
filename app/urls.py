@@ -2,10 +2,13 @@ from django.conf import settings
 from django.contrib import admin
 from django.urls import path
 from django.conf.urls.static import static
-from .views import home, list_document, create_document, delete_document, list_seguro, create_seguro, delete_seguro, list_pacientes, create_paciente, delete_paciente, list_especialidades, create_especialidad, delete_especialidad, list_doctores, create_doctor, delete_doctores, list_citas, create_citas, delete_citas, update_document, update_seguro, update_paciente, update_especialidad, update_doctor, update_citas
+from .views import home, list_document, create_document, delete_document, list_seguro, create_seguro, delete_seguro, list_pacientes, create_paciente, delete_paciente, list_especialidades, create_especialidad, delete_especialidad, list_doctores, create_doctor, delete_doctores, list_citas, create_citas, delete_citas, update_document, update_seguro, update_paciente, update_especialidad, update_doctor, update_citas, list_user, update_user
 
 urlpatterns = [
     path("", home, name="home"),
+    # Usuario
+    path("user/", list_user, name="user"),
+    path('update_user/<str:username>/', update_user, name='update_user'),
     # documentos
     path("documentos/", list_document, name="documentos"),
     path("documentos/crear/", create_document, name="documentos_crear"),

@@ -52,6 +52,53 @@ body {
   margin-right: 10px;
 }
 
+/* perfil */
+.perfil {
+  background-color: #fff;
+  padding: 2rem;
+  border-radius: 0.625rem;
+  box-shadow: 0 2px 4px rgba(255, 255, 255, 0.6);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.perfil_name {
+  font-weight: 900;
+  font-size: 2rem;
+}
+
+.perfil_grupo {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+}
+
+.perfil_item {
+  font-weight: 800;
+  font-size: 1.3rem;
+}
+
+.perfil_item span {
+  font-weight: 400;
+}
+
+.perfil_editar {
+  background-color: #0a192f;
+  border: 2px solid #0a192f;
+  color: #fff;
+  padding: 0.5rem 1.3rem;
+  margin-top: 1rem;
+  border-radius: 0.625rem;
+  font-weight: 600;
+  transition: all 0.5s ease;
+}
+
+.perfil_editar:hover {
+  background-color: transparent;
+  color: #0a192f;
+}
 /* main */
 .main {
   padding: 3rem 0;
@@ -75,6 +122,10 @@ body {
 
 .form select.form_input {
   padding: 10px;
+}
+
+.form label.form_label-alert {
+  color: #ff0000;
 }
 
 .form button {

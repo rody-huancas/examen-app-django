@@ -1,0 +1,18 @@
+{% extends 'base.html' %} {% block content %}
+<h3 class="main_subtitle">Mi perfil</h3>
+<div class="perfil">
+  <p class="perfil_name">{{ user.username }}</p>
+  <div class="perfil_grupo">
+    <p class="perfil_item">
+      Nombre Completo: <span>{{ user.full_name }}</span>
+    </p>
+    <p class="perfil_item">Correo electrónico: <span>{{ user.email }}</span></p>
+    <p class="perfil_item">Telefono: <span>{{ user.telefono }}</span></p>
+  </div>
+  <a class="perfil_editar" href="{% url 'update_user' user.username %}"
+    >Editar Perfil</a
+  >
+</div>
+
+<!--  -->
+{% endblock%}

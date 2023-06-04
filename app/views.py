@@ -6,11 +6,41 @@ from .models import Tipo_Documento_Identidad, tipos_seguro, paciente, especialid
 def home(request):
     return render(request, "home.html")
 
+# USUARIOS
+def list_user(request):
+    user = request.user  # Obtener el usuario actual
+    return render(request, 'app/perfil.html', {'user': user})
+
+
+def update_user(request, username):
+    user = usuario.objects.get(username=username)
+
+    if request.method == 'POST':
+        # Obtén los datos actualizados del formulario
+        username = request.POST['username']
+        full_name = request.POST['full_name']
+        email = request.POST['email']
+        password = request.POST['password']
+
+        # Actualiza los campos del usuario
+        user.username = username
+        user.full_name = full_name
+        user.email = email
+        if password:
+            user.set_password(password) 
+
+        user.save()
+
+        return redirect('/user/')  # Redirige a la página de perfil o a donde desees
+
+    return render(request, 'app/update_perfil.html', {'user': user})
+
+
+
 # DOCUMENTO DE IDENTIDAD
 def list_document(request):
     documentos = Tipo_Documento_Identidad.objects.all()
     return render(request, 'app/documentoIdentidad.html', {'documentos':documentos})
-
 
 
 def create_document(request):

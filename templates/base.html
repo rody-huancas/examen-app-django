@@ -5,7 +5,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="{% static 'css/styles.css' %}" />
-    <link rel="stylesheet" href="{% static 'css/app.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/main.css' %}" />
     <title>Examen Parcial</title>
   </head>
 
@@ -17,6 +17,7 @@
 
         <div class="menu_container">
           <a class="item_menu" href="{% url 'home' %}"><i class="bi bi-house-fill"></i> Inicio</a>
+          <a class="item_menu" href="{% url 'user' %}"><i class="bi bi-person-bounding-box"></i> Mi Perfil</a>
           <a class="item_menu" href="{% url 'documentos' %}"><i class="bi bi-file-earmark-ruled-fill"></i> Tipo documento</a>
           <a class="item_menu" href="{% url 'seguros' %}"><i class="bi bi-file-earmark-minus-fill"></i> Tipos Seguro</a>
           <a class="item_menu" href="{% url 'pacientes' %}"><i class="bi bi-people-fill"></i> Pacientes</a>
