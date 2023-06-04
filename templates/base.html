@@ -1,0 +1,61 @@
+{%load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}" />
+    <title>Examen</title>
+  </head>
+
+  <body>
+    <header class="header">
+      <div class="container">
+        {%if request.user.is_authenticated %}
+        <span>Hola {{ request.user.username | title }}</span>
+
+        <div class="menu">
+          <a href="{% url 'home' %}"><i class="bi bi-house-fill"></i> Inicio</a>
+          <a href="{% url 'documentos' %}">Tipo documento</a>
+          <a href="{% url 'seguros' %}">Tipos Seguro</a>
+          <a href="{% url 'pacientes' %}">Pacientes</a>
+          <a href="{% url 'especialidades' %}">Especialidades</a>
+        </div>
+        <div>
+          <a href="{% url 'logout' %}">Salir</a>
+          {%else%}
+          <span class="logo">RODY</span>
+          <div class="auth">
+            <a href="{% url 'login' %}">Iniciar Sesión</a>
+            <a href="{% url 'registro' %}">Registrarse</a>
+          </div>
+          {%endif%}
+        </div>
+      </div>
+    </header>
+    <main>
+       {% comment %} ALERTA {% endcomment %}
+      {% comment %} <div id="message-container">
+        {% if messages %}
+          <ul class="alert-message">
+            {% for message in messages %}
+              <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+          </ul>
+        {% endif %}
+      </div> {% endcomment %}
+      {% comment %} FIN ALERTA {% endcomment %}
+      <div class="container">{% block content %} {% endblock %}</div>
+    </main>
+    <footer class="footer">
+      <div class="container">
+        <p>
+          &copy; Copyright {% now "Y" %} by
+          <a href="https://www.pythontutorial.net">Python Tutorial</a>
+        </p>
+      </div>
+    </footer>
+
+    <script src="{% static 'js/script.js' %}"></script>
+  </body>
+</html>

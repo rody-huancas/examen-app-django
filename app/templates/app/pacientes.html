@@ -1,0 +1,49 @@
+{% extends 'base.html' %} {% block content %}
+<form action="{% url 'pacientes_crear' %}" method="POST">
+  {% csrf_token %}
+  <!-- tipos de documento -->
+  <select name="tipo_documento_id">
+    {% for tipo_documento in tipos_documento %}
+    <option value="{{ tipo_documento.tipo_documento_id }}">
+      {{ tipo_documento.tipo_documento_nombre }}
+    </option>
+    {% endfor %}
+  </select>
+  <input type="text" name="nro_documento" placeholder="Ingrese su documento" />
+  <input type="text" name="nombre" placeholder="Ingrese su nombre" />
+  <input type="text" name="apellidos" placeholder="Ingrese su apellidos" />
+  <input type="text" name="direccion" placeholder="Ingrese su direccion" />
+  <input type="date" name="fecha_nacimiento" />
+  <!-- tipos de seguro -->
+  <select name="tipo_seguro_id">
+    {% for tipo_seguro in tipos_seguros %}
+    <option value="{{ tipo_seguro.tipo_seguro_id }}">
+      {{ tipo_seguro.tipo_seguro_nombre }}
+    </option>
+    {% endfor %}
+  </select>
+
+  <button>Guardar</button>
+</form>
+
+{% for paciente in pacientes %}
+<div style="border-top: 2px solid #000">
+  <p>{{ paciente.tipo_documento_id.tipo_documento_nombre }}</p>
+  <p>{{ paciente.nro_documento }}</p>
+  <h3>{{ paciente.nombre }}</h3>
+  <p>{{ paciente.apellidos }}</p>
+  <p>{{ paciente.direccion }}</p>
+  <p>{{ paciente.fecha_nacimiento }}</p>
+  <p>{{ paciente.tipo_seguro_id.tipo_seguro_nombre }}</p>
+
+  <form action="{% url 'delete_paciente' paciente.id %}" method="POST">
+    {% csrf_token %}
+    <button>Eliminar</button>
+  </form>
+</div>
+{% empty %}
+<h2>No hay pacientes</h2>
+{% endfor %}
+
+<!--  -->
+{% endblock%}

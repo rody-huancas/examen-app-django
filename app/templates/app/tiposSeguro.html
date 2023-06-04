@@ -1,0 +1,31 @@
+{% extends 'base.html' %} {% block content %}
+<form action="{% url 'seguros_crear' %}" method="POST">
+  {% csrf_token %}
+  <input
+    type="text"
+    name="tipo_seguro_id"
+    placeholder="Ingrese su numero de seguro"
+  />
+  <input
+    type="text"
+    name="tipo_seguro_nombre"
+    placeholder="Ingrese su nombre de seguro"
+  />
+
+  <button>Guardar</button>
+</form>
+
+{% for seguro in seguros %}
+<div>
+  <h3>{{seguro.tipo_seguro_id}}</h3>
+  <p>{{seguro.tipo_seguro_nombre}}</p>
+  <form action="{% url 'delete_seguro' seguro.tipo_seguro_id %}" method="POST">
+    {% csrf_token %}
+    <button>Eliminar</button>
+  </form>
+</div>
+{% empty %}
+<h2>No hay seguros</h2>
+{% endfor %}
+<!--  -->
+{% endblock%}
