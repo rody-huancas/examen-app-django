@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% block content %}
+<form action="{% url 'citas_actualizar' cita.cita_id %}" method="POST">
+  {% csrf_token %}
+  <input type="number" name="cita_id" value="{{ cita.cita_id }}" placeholder="Ingrese su nro de cita" />
+  <!-- pacientes -->
+  <select name="paciente_id">
+    {% for paciente in pacientes %}
+    <option value="{{ paciente.id }}" {% if paciente.id == cita.paciente_id.id %} selected {% endif %}>{{ paciente.nombre }}</option>
+    {% endfor %}
+  </select>
+  <input type="date" name="fecha_cita" value="{{ cita.fecha_cita|date:'Y-m-d' }}" />
+  <!-- Especialidad -->
+  <select name="especialidad_id">
+    {% for especialidad in especialidades %}
+    <option value="{{ especialidad.especialidad_id }}" {% if especialidad.especialidad_id == cita.especialidad_id.especialidad_id %} selected {% endif %}>
+      {{ especialidad.especialidad_nombre }}
+    </option>
+    {% endfor %}
+  </select>
+  <!-- doctor -->
+  <select name="doctor_id">
+    {% for doctor in doctores %}
+    <option value="{{ doctor.doctor_id }}" {% if doctor.doctor_id == cita.doctor_id.doctor_id %} selected {% endif %}>
+      {{ doctor.doctor_nombre }}
+    </option>
+    {% endfor %}
+  </select>
+  <input type="text" name="observaciones" value="{{ cita.observaciones }}" placeholder="Ingrese su observaciones" />
+  <!-- usuarios -->
+  <select name="username">
+    {% for user in usuarios %}
+    <option value="{{ user.username }}" {% if user.username == cita.username.username %} selected {% endif %}>
+      {{ user.full_name }}
+    </option>
+    {% endfor %}
+  </select>
+
+  <button>Guardar</button>
+</form>
+{% endblock %}

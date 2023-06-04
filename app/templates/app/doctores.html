@@ -2,7 +2,7 @@
 <form action="{% url 'doctores_crear' %}" method="POST">
   {% csrf_token %}
   <input
-    type="text"
+    type="number"
     name="doctor_id"
     placeholder="Ingrese su numero de doctor"
   />
@@ -17,7 +17,7 @@
     placeholder="Ingrese su direccion de doctor"
   />
   <input
-    type="text"
+    type="number"
     name="doctor_telefono"
     placeholder="Ingrese su telefono de doctor"
   />
@@ -27,10 +27,11 @@
 
 {% for doctor in doctores %}
 <div>
-  <p>{{doctor.doctor_id}}</p>
-  <h3>{{doctor.doctor_nombre}}</h3>
-  <p>{{doctor.doctor_direccion}}</p>
-  <p>{{doctor.doctor_telefono}}</p>
+  <p>{{ doctor.doctor_id }}</p>
+  <h3>{{ doctor.doctor_nombre }}</h3>
+  <p>{{ doctor.doctor_direccion }}</p>
+  <p>{{ doctor.doctor_telefono }}</p>
+  <a href="{% url 'update_doctor' doctor.doctor_id %}">Actualizar</a>
   <form action="{% url 'delete_doctores' doctor.doctor_id %}" method="POST">
     {% csrf_token %}
     <button>Eliminar</button>

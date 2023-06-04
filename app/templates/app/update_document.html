@@ -1,0 +1,23 @@
+{% extends 'base.html' %} {% block content %}
+<form
+  action="{% url 'update_document' documento.tipo_documento_id %}"
+  method="POST"
+>
+  {% csrf_token %}
+  <input
+    type="number"
+    name="tipo_documento_id"
+    placeholder="Ingrese su numero de seguro"
+    value="{{ documento.tipo_documento_id }}"
+  />
+  <input
+    type="text"
+    name="tipo_documento_nombre"
+    placeholder="Ingrese su nombre de seguro"
+    value="{{ documento.tipo_documento_nombre }}"
+  />
+
+  <button>Actualizar</button>
+</form>
+<!--  -->
+{% endblock %}

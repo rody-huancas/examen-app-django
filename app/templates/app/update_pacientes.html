@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<form action="{% url 'update_paciente' paciente.id %}" method="POST">
+  {% csrf_token %}
+  <!-- tipos de documento -->
+  <select name="tipo_documento_id">
+    {% for tipo_documento in tipos_documento %}
+    <option value="{{ tipo_documento.tipo_documento_id }}" {% if tipo_documento.tipo_documento_id == paciente.tipo_documento_id.tipo_documento_id %} selected {% endif %}>
+      {{ tipo_documento.tipo_documento_nombre }}
+    </option>
+    {% endfor %}
+  </select>
+  <input type="number" name="nro_documento" value="{{ paciente.nro_documento }}" placeholder="Ingrese su documento" />
+  <input type="text" name="nombre" value="{{ paciente.nombre }}" placeholder="Ingrese su nombre" />
+  <input type="text" name="apellidos" value="{{ paciente.apellidos }}" placeholder="Ingrese su apellidos" />
+  <input type="text" name="direccion" value="{{ paciente.direccion }}" placeholder="Ingrese su direccion" />
+  <input type="date" name="fecha_nacimiento" value="{{ paciente.fecha_nacimiento|date:'Y-m-d' }}" />
+  <!-- tipos de seguro -->
+  <select name="tipo_seguro_id">
+    {% for tipo_seguro in tipos_seguros %}
+    <option value="{{ tipo_seguro.tipo_seguro_id }}" {% if tipo_seguro.tipo_seguro_id == paciente.tipo_seguro_id.tipo_seguro_id %} selected {% endif %}>
+      {{ tipo_seguro.tipo_seguro_nombre }}
+    </option>
+    {% endfor %}
+  </select>
+
+  <button>Guardar</button>
+</form>
+{% endblock%}

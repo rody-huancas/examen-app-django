@@ -10,10 +10,22 @@ def list_document(request):
     documentos = Tipo_Documento_Identidad.objects.all()
     return render(request, 'app/documentoIdentidad.html', {'documentos':documentos})
 
+
 def create_document(request):
     documento = Tipo_Documento_Identidad( tipo_documento_id=request.POST['tipo_documento_id'], tipo_documento_nombre=request.POST['tipo_documento_nombre'])
     documento.save()
     return redirect('/documentos/')
+
+
+def update_document(request, id_documento):
+    documento = Tipo_Documento_Identidad.objects.get(tipo_documento_id=id_documento)
+    if request.method == 'POST':
+        documento.tipo_documento_id = request.POST['tipo_documento_id']
+        documento.tipo_documento_nombre = request.POST['tipo_documento_nombre']
+        documento.save()
+        return redirect('/documentos/')
+    else:
+        return render(request, 'app/update_document.html', {'documento': documento})
 
 
 def delete_document(request, document_id):
@@ -32,6 +44,22 @@ def create_seguro(request):
     seguros = tipos_seguro( tipo_seguro_id=request.POST['tipo_seguro_id'], tipo_seguro_nombre=request.POST['tipo_seguro_nombre'])
     seguros.save()
     return redirect('/seguros/')
+
+def update_seguro(request, seguro_id):
+    seguro = tipos_seguro.objects.get(tipo_seguro_id=seguro_id)
+
+    if request.method == 'POST':
+        tipo_seguro_id = request.POST['tipo_seguro_id']
+        tipo_seguro_nombre = request.POST['tipo_seguro_nombre']
+        
+        seguro.tipo_seguro_id = tipo_seguro_id
+        seguro.tipo_seguro_nombre = tipo_seguro_nombre
+        seguro.save()
+        
+        return redirect('/seguros/') 
+    
+    return render(request, 'app/update_seguro.html', {'seguro': seguro})
+
 
 def delete_seguro(request, seguro_id):
     seguros = tipos_seguro.objects.get(tipo_seguro_id=seguro_id)
@@ -68,6 +96,32 @@ def create_paciente(request):
     return redirect('/pacientes/')
 
 
+def update_paciente(request, paciente_id):
+    pacientes = paciente.objects.get(id=paciente_id)
+    
+    if request.method == 'POST':
+        tipo_documento_id = request.POST['tipo_documento_id']
+        tipo_documento = Tipo_Documento_Identidad.objects.get(tipo_documento_id=tipo_documento_id)
+        
+        tipo_seguro_id = request.POST['tipo_seguro_id']
+        tipo_seguros = tipos_seguro.objects.get(tipo_seguro_id=tipo_seguro_id)
+        
+        pacientes.tipo_documento_id = tipo_documento
+        pacientes.nro_documento = request.POST['nro_documento']
+        pacientes.nombre = request.POST['nombre']
+        pacientes.apellidos = request.POST['apellidos']
+        pacientes.direccion = request.POST['direccion']
+        pacientes.fecha_nacimiento = request.POST['fecha_nacimiento']
+        pacientes.tipo_seguro_id = tipo_seguros
+        pacientes.save()
+        
+        return redirect('/pacientes/')  # Redirigir a la lista de pacientes actualizada
+    
+    tipos_documento = Tipo_Documento_Identidad.objects.all()
+    tipos_seguros = tipos_seguro.objects.all()
+    return render(request, 'app/update_pacientes.html', {'paciente': pacientes, 'tipos_documento': tipos_documento, 'tipos_seguros': tipos_seguros})
+
+
 def delete_paciente(request, paciente_id):
     pacientes = paciente.objects.get(id=paciente_id)
     pacientes.delete()
@@ -84,6 +138,19 @@ def create_especialidad(request):
     especialidad = especialidades( especialidad_id=request.POST['especialidad_id'], especialidad_nombre=request.POST['especialidad_nombre'])
     especialidad.save()
     return redirect('/especialidades/')
+
+
+def update_especialidad(request, especialidad_id):
+    especialidad = especialidades.objects.get(especialidad_id=especialidad_id)
+    
+    if request.method == 'POST':
+        especialidad.especialidad_id = request.POST['especialidad_id']
+        especialidad.especialidad_nombre = request.POST['especialidad_nombre']
+        especialidad.save()
+        
+        return redirect('/especialidades/')  # Redirigir a la lista de especialidades actualizada
+    
+    return render(request, 'app/update_especialidad.html', {'especialidad': especialidad})
 
 
 def delete_especialidad(request, especialidad_id):
@@ -105,6 +172,22 @@ def create_doctor(request):
                       doctor_telefono=request.POST['doctor_telefono'])
     doctor.save()
     return redirect('/doctores/')
+
+
+def update_doctor(request, doctor_id):
+    doctor = doctores.objects.get(doctor_id=doctor_id)
+    
+    if request.method == 'POST':
+        doctor.doctor_id = request.POST['doctor_id']
+        doctor.doctor_nombre = request.POST['doctor_nombre']
+        doctor.doctor_direccion = request.POST['doctor_direccion']
+        doctor.doctor_telefono = request.POST['doctor_telefono']
+        doctor.save()
+        
+        return redirect('/doctores/')  # Redirigir a la lista de doctores actualizada
+    
+    return render(request, 'app/update_doctores.html', {'doctor': doctor})
+
 
 
 def delete_doctores(request, doctor_id):
@@ -149,6 +232,42 @@ def create_citas(request):
     
     cita.save()
     return redirect('/citas/')
+
+
+def update_citas(request, cita_id):
+    cita = citas_medicas.objects.get(cita_id=cita_id)
+
+    if request.method == 'POST':
+        paciente_id = request.POST['paciente_id']
+        paciente_obj = paciente.objects.get(id=paciente_id)
+        
+        especialidad_id = request.POST['especialidad_id']
+        especialidad_obj = especialidades.objects.get(especialidad_id=especialidad_id)
+        
+        doctor_id = request.POST['doctor_id']
+        doctor_obj = doctores.objects.get(doctor_id=doctor_id)
+        
+        username = request.POST['username']
+        user_obj = usuario.objects.get(username=username)
+        
+        cita.cita_id = request.POST['cita_id']
+        cita.observaciones = request.POST['observaciones']
+        cita.fecha_cita = request.POST['fecha_cita']
+        cita.doctor_id = doctor_obj
+        cita.especialidad_id = especialidad_obj
+        cita.paciente_id = paciente_obj
+        cita.username_id = user_obj
+        cita.save()
+        
+        return redirect('/citas/')  # Redirigir a la lista de citas actualizada
+
+    pacientes = paciente.objects.all()
+    especialidad = especialidades.objects.all()
+    doctor = doctores.objects.all()
+    usuarios = usuario.objects.all()
+    return render(request, 'app/update_citas.html', {'cita': cita, 'pacientes': pacientes, 'especialidades': especialidad, 'doctores': doctor, 'usuarios': usuarios})
+
+
 
 
 def delete_citas(request, cita_id):

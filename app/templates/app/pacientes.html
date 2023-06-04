@@ -9,7 +9,11 @@
     </option>
     {% endfor %}
   </select>
-  <input type="text" name="nro_documento" placeholder="Ingrese su documento" />
+  <input
+    type="number"
+    name="nro_documento"
+    placeholder="Ingrese su documento"
+  />
   <input type="text" name="nombre" placeholder="Ingrese su nombre" />
   <input type="text" name="apellidos" placeholder="Ingrese su apellidos" />
   <input type="text" name="direccion" placeholder="Ingrese su direccion" />
@@ -41,6 +45,8 @@
     {% csrf_token %}
     <button>Eliminar</button>
   </form>
+
+  <a href="{% url 'update_paciente' paciente.id %}">Actualizar</a>
 </div>
 {% empty %}
 <h2>No hay pacientes</h2>

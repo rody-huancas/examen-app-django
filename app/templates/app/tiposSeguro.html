@@ -2,7 +2,7 @@
 <form action="{% url 'seguros_crear' %}" method="POST">
   {% csrf_token %}
   <input
-    type="text"
+    type="number"
     name="tipo_seguro_id"
     placeholder="Ingrese su numero de seguro"
   />
@@ -17,13 +17,15 @@
 
 {% for seguro in seguros %}
 <div>
-  <h3>{{seguro.tipo_seguro_id}}</h3>
-  <p>{{seguro.tipo_seguro_nombre}}</p>
+  <h3>{{ seguro.tipo_seguro_id }}</h3>
+  <p>{{ seguro.tipo_seguro_nombre }}</p>
   <form action="{% url 'delete_seguro' seguro.tipo_seguro_id %}" method="POST">
     {% csrf_token %}
     <button>Eliminar</button>
   </form>
+  <a href="{% url 'update_seguro' seguro.tipo_seguro_id %}">Actualizar</a>
 </div>
+
 {% empty %}
 <h2>No hay seguros</h2>
 {% endfor %}

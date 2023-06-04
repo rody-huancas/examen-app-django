@@ -2,7 +2,7 @@
 <form action="{% url 'documentos_crear' %}" method="POST">
   {% csrf_token %}
   <input
-    type="text"
+    type="number"
     name="tipo_documento_id"
     placeholder="Ingrese su numero de seguro"
   />
@@ -17,8 +17,8 @@
 
 {% for documento in documentos %}
 <div>
-  <h3>{{documento.tipo_documento_id}}</h3>
-  <p>{{documento.tipo_documento_nombre}}</p>
+  <h3>{{ documento.tipo_documento_id }}</h3>
+  <p>{{ documento.tipo_documento_nombre }}</p>
   <form
     action="{% url 'delete_document' documento.tipo_documento_id %}"
     method="POST"
@@ -26,6 +26,9 @@
     {% csrf_token %}
     <button>Eliminar</button>
   </form>
+  <a href="{% url 'update_document' documento.tipo_documento_id %}"
+    >Actualizar</a
+  >
 </div>
 {% empty %}
 <h2>No hay seguros</h2>

@@ -1,7 +1,7 @@
 {% extends 'base.html' %} {% block content %}
 <form action="{% url 'citas_crear' %}" method="POST">
   {% csrf_token %}
-  <input type="text" name="cita_id" placeholder="Ingrese su nro de cita" />
+  <input type="number" name="cita_id" placeholder="Ingrese su nro de cita" />
   <!-- pacientes -->
   <select name="paciente_id">
     {% for paciente in pacientes %}
@@ -49,6 +49,8 @@
   <p>{{ cita.especialidad_id.especialidad_nombre }}</p>
   <p>{{ cita.paciente_id.nombre }}</p>
   <p>{{ cita.username.full_name }}</p>
+
+  <a href="{% url 'citas_actualizar' cita.cita_id %}">Actualizar</a>
 
   <form action="{% url 'delete_citas' cita.cita_id %}" method="POST">
     {% csrf_token %}

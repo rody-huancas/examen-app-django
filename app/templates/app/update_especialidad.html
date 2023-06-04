@@ -1,0 +1,22 @@
+{% extends 'base.html' %} {% block content %}
+<form
+  action="{% url 'update_especialidad' especialidad.especialidad_id %}"
+  method="POST"
+>
+  {% csrf_token %}
+  <input
+    type="number"
+    name="especialidad_id"
+    value="{{ especialidad.especialidad_id }}"
+    placeholder="Ingrese su numero de especialidad"
+  />
+  <input
+    type="text"
+    name="especialidad_nombre"
+    value="{{ especialidad.especialidad_nombre }}"
+    placeholder="Ingrese su nombre de especialidad"
+  />
+
+  <button>Guardar</button>
+</form>
+{% endblock %}
