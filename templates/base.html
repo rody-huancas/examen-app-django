@@ -1,4 +1,4 @@
-{%load static %}
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -6,13 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="{% static 'css/styles.css' %}" />
     <link rel="stylesheet" href="{% static 'css/app.css' %}" />
-    <title>Examen</title>
+    <title>Examen Parcial</title>
   </head>
 
   <body>
     <header class="header">
       <div class="container">
-        {%if request.user.is_authenticated %}
+        {% if request.user.is_authenticated %}
         <span>Hola {{ request.user.username | title }}</span>
 
         <div class="menu_container">
@@ -26,29 +26,29 @@
         </div>
         <div>
           <a class="item_menu-logout" href="{% url 'logout' %}"><i class="bi bi-box-arrow-right"></i>Salir</a>
-          {%else%}
+        {% else %}
           <span class="logo">RODY</span>
           <div class="auth">
             <a class="item_menu" href="{% url 'login' %}">Iniciar Sesión</a>
             <a class="item_menu" href="{% url 'registro' %}">Registrarse</a>
           </div>
-          {%endif%}
+        {% endif %}
         </div>
       </div>
     </header>
     <main class="main">
-       {% comment %} ALERTA {% endcomment %}
-      {% comment %} <div id="message-container">
+      <div class="container">
         {% if messages %}
-          <ul class="alert-message">
-            {% for message in messages %}
-              <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-            {% endfor %}
-          </ul>
+          <div id="message-container" style="display: none;">
+            <ul class="alert-message">
+              {% for message in messages %}
+                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+              {% endfor %}
+            </ul>
+          </div>
         {% endif %}
-      </div> {% endcomment %}
-      {% comment %} FIN ALERTA {% endcomment %}
-      <div class="container">{% block content %} {% endblock %}</div>
+        {% block content %} {% endblock %}
+      </div>
     </main>
     <footer class="footer">
       <div class="container">
@@ -59,6 +59,29 @@
       </div>
     </footer>
 
-    <script src="{% static 'js/script.js' %}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const messageContainer = document.getElementById("message-container");
+        const messages = messageContainer.getElementsByClassName("alert-message")[0].getElementsByTagName("li");
+
+        if (messages.length > 0) {
+          const messageText = messages[0].innerText;
+          Swal.fire({
+            icon: "success",
+            title: messageText,
+            position: "top-end",
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            toast: true,
+            didOpen: (toast) => {
+              toast.addEventListener("mouseenter", Swal.stopTimer);
+              toast.addEventListener("mouseleave", Swal.resumeTimer);
+            },
+          });
+        }
+      });
+    </script>
   </body>
 </html>

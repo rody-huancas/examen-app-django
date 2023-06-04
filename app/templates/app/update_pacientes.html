@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<h3>ACTUALIZAR PACIENTE</h3>
 <form action="{% url 'update_paciente' paciente.id %}" method="POST" class="form">
   {% csrf_token %}
   <!-- tipos de documento -->

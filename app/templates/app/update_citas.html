@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
+<h3>ACTUALIZAR CITA</h3>
 <form action="{% url 'citas_actualizar' cita.cita_id %}" method="POST" class="form">
   {% csrf_token %}
   <input type="number" name="cita_id" value="{{ cita.cita_id }}" placeholder="Ingrese su nro de cita" class="form_input"/>

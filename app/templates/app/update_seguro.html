@@ -1,4 +1,5 @@
 {% extends 'base.html' %} {% block content %}
+<h3>ACTUALIZAR PACIENTE</h3>
 <form
   action="{% url 'update_seguro' seguro.tipo_seguro_id %}"
   method="POST"
@@ -9,7 +10,7 @@
     type="number"
     name="tipo_seguro_id"
     value="{{ seguro.tipo_seguro_id }}"
-    placeholder="Ingrese su numero de seguro"
+    placeholder="Ingrese su número de seguro"
     class="form_input"
   />
   <input

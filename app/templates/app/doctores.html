@@ -1,4 +1,5 @@
 {% extends 'base.html' %} {% block content %}
+<h3>DOCTORES</h3>
 <form action="{% url 'doctores_crear' %}" method="POST" class="form">
   {% csrf_token %}
   <input
@@ -29,7 +30,7 @@
   <button><i class="bi bi-save"></i> Guardar</button>
 </form>
 
-<h3 class="main_subtitle">Documentos Registrados</h3>
+<h3 class="main_subtitle">Doctores Registrados</h3>
 <div class="main_grid">
   {% for doctor in doctores %}
   <div class="main_card">

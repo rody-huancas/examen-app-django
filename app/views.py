@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.shortcuts import render, redirect
 from .models import Tipo_Documento_Identidad, tipos_seguro, paciente, especialidades, doctores, citas_medicas, usuario
 
@@ -11,9 +12,13 @@ def list_document(request):
     return render(request, 'app/documentoIdentidad.html', {'documentos':documentos})
 
 
+
 def create_document(request):
     documento = Tipo_Documento_Identidad( tipo_documento_id=request.POST['tipo_documento_id'], tipo_documento_nombre=request.POST['tipo_documento_nombre'])
     documento.save()
+
+    messages.success(request, 'El documento se ha creado exitosamente.')
+
     return redirect('/documentos/')
 
 
@@ -23,6 +28,9 @@ def update_document(request, id_documento):
         documento.tipo_documento_id = request.POST['tipo_documento_id']
         documento.tipo_documento_nombre = request.POST['tipo_documento_nombre']
         documento.save()
+        
+        messages.success(request, 'El documento se ha actualizado exitosamente.')
+
         return redirect('/documentos/')
     else:
         return render(request, 'app/update_document.html', {'documento': documento})
@@ -31,6 +39,8 @@ def update_document(request, id_documento):
 def delete_document(request, document_id):
     documentos = Tipo_Documento_Identidad.objects.get(tipo_documento_id=document_id)
     documentos.delete()
+    messages.success(request, 'El documento se ha eliminado exitosamente.')
+
     return redirect('/documentos/')
 # FIN DOCUMENTO DE IDENTIDAD
 
@@ -43,6 +53,8 @@ def list_seguro(request):
 def create_seguro(request):
     seguros = tipos_seguro( tipo_seguro_id=request.POST['tipo_seguro_id'], tipo_seguro_nombre=request.POST['tipo_seguro_nombre'])
     seguros.save()
+    messages.success(request, 'El seguro se ha creado exitosamente.')
+
     return redirect('/seguros/')
 
 def update_seguro(request, seguro_id):
@@ -55,6 +67,7 @@ def update_seguro(request, seguro_id):
         seguro.tipo_seguro_id = tipo_seguro_id
         seguro.tipo_seguro_nombre = tipo_seguro_nombre
         seguro.save()
+        messages.success(request, 'El seguro se ha actualizado exitosamente.')
         
         return redirect('/seguros/') 
     
@@ -64,6 +77,8 @@ def update_seguro(request, seguro_id):
 def delete_seguro(request, seguro_id):
     seguros = tipos_seguro.objects.get(tipo_seguro_id=seguro_id)
     seguros.delete()
+    messages.success(request, 'El seguro se ha eliminado exitosamente.')
+
     return redirect('/seguros/')
 # FIN TIPOS DE SEGURO
 
@@ -93,6 +108,8 @@ def create_paciente(request):
     )
     
     pacientes.save()
+    messages.success(request, 'El paciente se ha creado exitosamente.')
+
     return redirect('/pacientes/')
 
 
@@ -114,8 +131,9 @@ def update_paciente(request, paciente_id):
         pacientes.fecha_nacimiento = request.POST['fecha_nacimiento']
         pacientes.tipo_seguro_id = tipo_seguros
         pacientes.save()
+        messages.success(request, 'El paciente se ha actualizado exitosamente.')
         
-        return redirect('/pacientes/')  # Redirigir a la lista de pacientes actualizada
+        return redirect('/pacientes/') 
     
     tipos_documento = Tipo_Documento_Identidad.objects.all()
     tipos_seguros = tipos_seguro.objects.all()
@@ -125,6 +143,8 @@ def update_paciente(request, paciente_id):
 def delete_paciente(request, paciente_id):
     pacientes = paciente.objects.get(id=paciente_id)
     pacientes.delete()
+    messages.success(request, 'El paciente se ha eliminado exitosamente.')
+
     return redirect('/pacientes/')
 # FIN PACIENTES
 
@@ -137,6 +157,8 @@ def list_especialidades(request):
 def create_especialidad(request):
     especialidad = especialidades( especialidad_id=request.POST['especialidad_id'], especialidad_nombre=request.POST['especialidad_nombre'])
     especialidad.save()
+    messages.success(request, 'La especialidad se ha creado exitosamente.')
+
     return redirect('/especialidades/')
 
 
@@ -147,6 +169,7 @@ def update_especialidad(request, especialidad_id):
         especialidad.especialidad_id = request.POST['especialidad_id']
         especialidad.especialidad_nombre = request.POST['especialidad_nombre']
         especialidad.save()
+        messages.success(request, 'La especialidad se ha actualizado exitosamente.')
         
         return redirect('/especialidades/')  # Redirigir a la lista de especialidades actualizada
     
@@ -156,6 +179,8 @@ def update_especialidad(request, especialidad_id):
 def delete_especialidad(request, especialidad_id):
     especialidad = especialidades.objects.get(especialidad_id=especialidad_id)
     especialidad.delete()
+    messages.success(request, 'La especialidad se ha eliminado exitosamente.')
+
     return redirect('/especialidades/')
 # FIN ESPECIALIDADES
 
@@ -171,6 +196,8 @@ def create_doctor(request):
                       doctor_direccion=request.POST['doctor_direccion'],
                       doctor_telefono=request.POST['doctor_telefono'])
     doctor.save()
+    messages.success(request, 'El doctor se ha creado exitosamente.')
+
     return redirect('/doctores/')
 
 
@@ -183,8 +210,9 @@ def update_doctor(request, doctor_id):
         doctor.doctor_direccion = request.POST['doctor_direccion']
         doctor.doctor_telefono = request.POST['doctor_telefono']
         doctor.save()
+        messages.success(request, 'El doctor se ha actualizado exitosamente.')
         
-        return redirect('/doctores/')  # Redirigir a la lista de doctores actualizada
+        return redirect('/doctores/') 
     
     return render(request, 'app/update_doctores.html', {'doctor': doctor})
 
@@ -192,6 +220,8 @@ def update_doctor(request, doctor_id):
 def delete_doctores(request, doctor_id):
     doctor = doctores.objects.get(doctor_id=doctor_id)
     doctor.delete()
+    messages.success(request, 'El doctor se ha eliminado exitosamente.')
+
     return redirect('/doctores/')
 # FIN DOCTORES
 
@@ -230,6 +260,8 @@ def create_citas(request):
     )
     
     cita.save()
+    messages.success(request, 'La cita se ha creado exitosamente.')
+
     return redirect('/citas/')
 
 
@@ -257,6 +289,7 @@ def update_citas(request, cita_id):
         cita.paciente_id = paciente_obj
         cita.username_id = user_obj
         cita.save()
+        messages.success(request, 'La cita se ha actualizado exitosamente.')
         
         return redirect('/citas/')  # Redirigir a la lista de citas actualizada
 
@@ -270,5 +303,7 @@ def update_citas(request, cita_id):
 def delete_citas(request, cita_id):
     citas = citas_medicas.objects.get(cita_id=cita_id)
     citas.delete()
+    messages.success(request, 'La cita se ha eliminado exitosamente.')
+
     return redirect('/citas/')
 # FIN CITAS MEDICAS

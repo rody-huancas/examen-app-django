@@ -1,4 +1,5 @@
 {% extends 'base.html' %} {% block content %}
+<h3>TIPOS DE SEGURO</h3>
 <form action="{% url 'seguros_crear' %}" method="POST" class="form">
   {% csrf_token %}
   <input
